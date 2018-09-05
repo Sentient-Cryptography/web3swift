@@ -381,7 +381,7 @@ extension web3.web3contract.TransactionIntermediate {
 //        return returnPromise
 //    }
     
-    func callPromise(options: Web3Options? = nil, onBlock: String = "latest") -> Promise<[String: Any]>{
+    public func callPromise(options: Web3Options? = nil, onBlock: String = "latest") -> Promise<[String: Any]>{
         let assembledTransaction : EthereumTransaction = self.transaction
         let queue = self.web3.requestDispatcher.queue
         let returnPromise = Promise<[String:Any]> { seal in
