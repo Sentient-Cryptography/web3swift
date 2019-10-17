@@ -21,6 +21,9 @@ extension Web3HttpProvider {
                 var urlRequest = try URLRequest(url: providerURL, method: .post)
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+                if let basicAuth = generateBasicAuthCredentialsHeaderValue(fromURL: providerURL) {
+                    urlRequest.setValue("Basic \(basicAuth)", forHTTPHeaderField: "Authorization")
+                }
                 urlRequest.httpBody = requestData
 //                let debugValue = try JSONSerialization.jsonObject(with: requestData, options: JSONSerialization.ReadingOptions(rawValue: 0))
 //                print(debugValue)
@@ -53,6 +56,11 @@ extension Web3HttpProvider {
             }
         }
     
+    private static func generateBasicAuthCredentialsHeaderValue(fromURL url: URL) -> String? {
+        guard let username = url.user, let password = url.password  else { return nil }
+        return "\(username):\(password)".data(using: .utf8)?.base64EncodedString()
+    }
+
     static func post(_ request: JSONRPCrequestBatch, providerURL: URL, queue: DispatchQueue = .main, session: URLSession) -> Promise<JSONRPCresponseBatch> {
         let rp = Promise<Data>.pending()
         var task: URLSessionTask? = nil
@@ -63,6 +71,9 @@ extension Web3HttpProvider {
                 var urlRequest = try URLRequest(url: providerURL, method: .post)
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+                if let basicAuth = generateBasicAuthCredentialsHeaderValue(fromURL: providerURL) {
+                    urlRequest.setValue("Basic \(basicAuth)", forHTTPHeaderField: "Authorization")
+                }
                 urlRequest.httpBody = requestData
 //                let debugValue = try JSONSerialization.jsonObject(with: requestData, options: JSONSerialization.ReadingOptions(rawValue: 0))
 //                print(debugValue)
