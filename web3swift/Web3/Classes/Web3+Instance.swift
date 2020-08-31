@@ -42,7 +42,7 @@ public class web3: Web3OptionsInheritable {
             self.dispatcher = dispatcher!
         }
         if requestDispatcher == nil {
-            self.requestDispatcher = JSONRPCrequestDispatcher(provider: provider, queue: self.queue.underlyingQueue!, policy: .Batch(32))
+            self.requestDispatcher = JSONRPCrequestDispatcher(provider: provider, queue: self.queue.underlyingQueue!, policy: .NoBatching)
         } else {
             self.requestDispatcher = requestDispatcher!
         }
