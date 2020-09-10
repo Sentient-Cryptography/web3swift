@@ -23,7 +23,12 @@ public class JSONRPCrequestDispatcher {
         self.queue = queue
         self.policy = policy
         self.lockQueue = DispatchQueue(label: "batchingQueue", qos: .userInitiated)
-        self.batches.append(Batch(provider: self.provider, capacity: 32, queue: self.queue, lockQueue: self.lockQueue))
+        switch policy {
+        case .NoBatching:
+            self.batches.append(Batch(provider: self.provider, capacity: 32, queue: self.queue, lockQueue: self.lockQueue))
+        case .Batch(let count):
+            self.batches.append(Batch(provider: self.provider, capacity: count, queue: self.queue, lockQueue: self.lockQueue))
+        }
     }
     
     internal final class Batch {
