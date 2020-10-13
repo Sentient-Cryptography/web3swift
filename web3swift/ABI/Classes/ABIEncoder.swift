@@ -138,7 +138,7 @@ extension ABIElement.ParameterType.DynamicType {
             } else if let data = value as? Data {
                 let lengthToPad = UInt64(ceil(Double(data.count) / 32.0)) * 32
                 guard let lengthEncoded = BigUInt(data.count).abiEncode(bits: 256) else {return nil}
-                guard let paddedData = data.setLengthRight(lengthToPad) else {return (nil)}
+                guard let paddedData = data.setLengthRight(lengthToPad) else {return nil}
                 return lengthEncoded + paddedData
             }
             return nil
@@ -159,7 +159,7 @@ extension ABIElement.ParameterType.DynamicType {
             } else if let data = value as? Data {
                 let lengthToPad = UInt64(ceil(Double(data.count) / 32.0)) * 32
                 guard let lengthEncoded = BigUInt(data.count).abiEncode(bits: 256) else {return nil}
-                guard let paddedData = data.setLengthRight(lengthToPad) else {return (nil)}
+                guard let paddedData = data.setLengthRight(lengthToPad) else {return nil}
                 return lengthEncoded + paddedData
             }
         default:
