@@ -167,7 +167,8 @@ extension web3.web3contract.EventParser {
     
     public func parseTransactionByHashPromise(_ hash: Data) -> Promise<[EventParserResultProtocol]> {
         let queue = self.web3.requestDispatcher.queue
-        return self.web3.eth.getTransactionReceiptPromise(hash).map(on:queue) {receipt throws -> [EventParserResultProtocol] in
+        let eth = SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3)
+        return eth.getTransactionReceiptPromise(hash).map(on:queue) {receipt throws -> [EventParserResultProtocol] in
             guard let results = parseReceiptForLogs(receipt: receipt, contract: self.contract, eventName: self.eventName, filter: self.filter) else {
                     throw Web3Error.processingError("Failed to parse receipt for events")
             }
@@ -177,11 +178,12 @@ extension web3.web3contract.EventParser {
     
     public func parseBlockByNumberPromise(_ blockNumber: UInt64) -> Promise<[EventParserResultProtocol]> {
         let queue = self.web3.requestDispatcher.queue
+        let eth = SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3)
         do {
             if self.filter != nil && (self.filter?.fromBlock != nil || self.filter?.toBlock != nil) {
                 throw Web3Error.inputError("Can not mix parsing specific block and using block range filter")
             }
-            return self.web3.eth.getBlockByNumberPromise(blockNumber).then(on: queue) {res in
+            return eth.getBlockByNumberPromise(blockNumber).then(on: queue) {res in
                 return self.parseBlockPromise(res)
             }
         } catch {
@@ -369,8 +371,9 @@ extension web3.web3contract {
                     return res as EventParserResultProtocol
                 }
             }
-            return fetchLogsPromise.thenMap(on:queue) {singleEvent in
-                return self.web3.eth.getTransactionReceiptPromise(singleEvent.eventLog!.transactionHash).map(on: queue) { receipt in
+            let eth = SafeWeb3.Eth(provider: self.web3.provider, web3: self.web3)
+            return fetchLogsPromise.thenMap(on:queue) { singleEvent in
+                return eth.getTransactionReceiptPromise(singleEvent.eventLog!.transactionHash).map(on: queue) { receipt in
                     var joinedEvent = singleEvent
                     joinedEvent.transactionReceipt = receipt
                     return joinedEvent as EventParserResultProtocol

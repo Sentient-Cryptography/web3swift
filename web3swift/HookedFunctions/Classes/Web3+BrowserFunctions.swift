@@ -12,7 +12,7 @@ import BigInt
 extension web3.BrowserFunctions {
     
     public func getAccounts() -> [String]? {
-        let result = self.web3.eth.getAccounts()
+        let result = SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3).getAccounts()
         switch result {
         case .failure(_):
             return nil
@@ -86,7 +86,7 @@ extension web3.BrowserFunctions {
     }
     
     public func sendTransaction(_ transaction: EthereumTransaction, options: Web3Options, password: String = "BANKEXFOUNDATION") -> [String:Any]? {
-        let result = self.web3.eth.sendTransaction(transaction, options: options, password: password)
+        let result = SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3).sendTransaction(transaction, options: options, password: password)
         switch result {
         case .failure(_):
             return nil
@@ -102,7 +102,7 @@ extension web3.BrowserFunctions {
     }
     
     public func estimateGas(_ transaction: EthereumTransaction, options: Web3Options) -> BigUInt? {
-        let result = self.web3.eth.estimateGas(transaction, options: options)
+        let result = SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3).estimateGas(transaction, options: options)
         switch result {
         case .failure(_):
             return nil
@@ -121,7 +121,7 @@ extension web3.BrowserFunctions {
         var transaction = trans
         var options = opts
         guard let _ = options.from else {return (nil, nil)}
-        let gasPriceResult = self.web3.eth.getGasPrice()
+        let gasPriceResult = SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3).getGasPrice()
         if case .failure(_) = gasPriceResult {
             return (nil, nil)
         }
@@ -144,8 +144,9 @@ extension web3.BrowserFunctions {
         do {
             var transaction = trans
             guard let from = options.from else {return nil}
+            let eth = SafeWeb3.Eth(provider: self.web3.provider, web3: self.web3)
             guard let keystoreManager = self.web3.provider.attachedKeystoreManager else {return nil}
-            let gasPriceResult = self.web3.eth.getGasPrice()
+            let gasPriceResult = eth.getGasPrice()
             if case .failure(_) = gasPriceResult {
                 return nil
             }
@@ -153,7 +154,7 @@ extension web3.BrowserFunctions {
             guard let gasEstimate = self.estimateGas(transaction, options: options) else {return nil}
             transaction.gasLimit = gasEstimate
             
-            let nonceResult = self.web3.eth.getTransactionCount(address: from, onBlock: "pending")
+            let nonceResult = eth.getTransactionCount(address: from, onBlock: "pending")
             if case .failure(_) = nonceResult {
                 return nil
             }
