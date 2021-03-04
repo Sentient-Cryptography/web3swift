@@ -82,7 +82,8 @@ public struct EventParser {
                         allResults += subsetOfEvents
                     }
                 case .hash(let hash):
-                    let response = self.web3.eth.getTransactionDetails(hash)
+                    let eth = SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3)
+                    let response = eth.getTransactionDetails(hash)
                     switch response {
                     case .failure(let error):
                         return Result.failure(error)
@@ -107,7 +108,7 @@ public struct EventParser {
     }
     
     public func parseTransactionByHash(_ hash: Data) -> Result<[EventParsingResult], Web3Error> {
-        let response = web3.eth.getTransactionReceipt(hash)
+        let response = SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3).getTransactionReceipt(hash)
         switch response {
         case .failure(let error):
             return Result.failure(error)

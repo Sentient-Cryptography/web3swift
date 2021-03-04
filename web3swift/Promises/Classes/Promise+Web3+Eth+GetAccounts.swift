@@ -16,7 +16,8 @@ extension web3.Eth {
         if (self.web3.provider.attachedKeystoreManager != nil) {
             let promise = Promise<[EthereumAddress]>.pending()
             queue.async {
-                let result = self.web3.wallet.getAccounts()
+                let wallet = SafeWeb3.Web3Wallet(provider: self.web3.provider, web3: self.web3)
+                let result = wallet.getAccounts()
                 switch result {
                 case .success(let allAccounts):
                     promise.resolver.fulfill(allAccounts)

@@ -41,7 +41,7 @@ extension web3.Eth {
             } catch {
                 throw Web3Error.inputError("Failed to locally sign a transaction")
             }
-            return self.web3.eth.sendRawTransactionPromise(assembledTransaction)
+            return SafeWeb3.Eth(provider : self.web3.provider, web3: self.web3).sendRawTransactionPromise(assembledTransaction)
         } catch {
             let returnPromise = Promise<TransactionSendingResult>.pending()
             queue.async {

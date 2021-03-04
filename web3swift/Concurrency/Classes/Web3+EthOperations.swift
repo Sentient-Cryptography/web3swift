@@ -10,15 +10,15 @@ import Foundation
 import Result
 import BigInt
 
-
 final class GetAccountsOperation: Web3Operation {
+
     override func main() {
         if (error != nil) {
             return self.processError(self.error!)
         }
         guard let completion = self.next else {return processError(Web3Error.inputError("Invalid input supplied"))}
         if (self.web3.provider.attachedKeystoreManager != nil) {
-            let result = self.web3.wallet.getAccounts()
+            let result = SafeWeb3.Web3Wallet(provider: self.web3.provider, web3: self.web3).getAccounts()
             switch result {
             case .success(let allAccounts):
                 return processSuccess(allAccounts as AnyObject)
