@@ -46,7 +46,7 @@ public class JSONRPCrequestDispatcher {
             }
             let requestID = request.id
             let promiseToReturn = Promise<JSONRPCresponse>.pending()
-            self.queue.async {
+            self.lockQueue.async {
                 if self.promisesDict[requestID] != nil {
                     promiseToReturn.resolver.reject(Web3Error.processingError("Request ID collision"))
                 }
