@@ -35,7 +35,7 @@ public class web3: Web3OptionsInheritable {
             self.queue = OperationQueue.init()
             self.queue.maxConcurrentOperationCount = 32
             self.queue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
-            
+
         } else {
             self.queue = queue!
         }
@@ -50,59 +50,51 @@ public class web3: Web3OptionsInheritable {
             self.requestDispatcher = requestDispatcher!
         }
     }
-    
-    
+
+
     public func addKeystoreManager(_ manager: KeystoreManager?) {
         self.provider.attachedKeystoreManager = manager
     }
-    
+
     public class Eth: Web3OptionsInheritable {
-        var provider: Web3Provider
         var web3: web3
         public var options: Web3Options {
             return self.web3.options
         }
 
         public init(provider prov: Web3Provider, web3 web3instance: web3) {
-            provider = prov
             web3 = web3instance
         }
     }
-    
+
     public class Personal:Web3OptionsInheritable {
-        var provider: Web3Provider
         var web3: web3
         public var options: Web3Options {
             return self.web3.options
         }
 
         public init(provider prov: Web3Provider, web3 web3instance: web3) {
-            provider = prov
             web3 = web3instance
         }
     }
-    
+
     public class Web3Wallet {
-        var provider: Web3Provider
         var web3: web3
 
         public init(provider prov: Web3Provider, web3 web3instance: web3) {
-            provider = prov
             web3 = web3instance
         }
     }
 
     public class BrowserFunctions: Web3OptionsInheritable {
-        var provider: Web3Provider
         var web3: web3
         public var options: Web3Options {
             return self.web3.options
         }
 
         public init(provider prov: Web3Provider, web3 web3instance: web3) {
-            provider = prov
             web3 = web3instance
         }
     }
-    
+
 }
