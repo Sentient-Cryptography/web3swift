@@ -12,15 +12,17 @@ import Foundation
 
 extension NSRegularExpression {
     typealias GroupNamesSearchResult = (NSTextCheckingResult, NSTextCheckingResult, Int)
+    private static let gregRegex = try? NSRegularExpression(pattern: "^\\(\\?<([\\w\\a_-]*)>$", options: .dotMatchesLineSeparators)
+    private static let regRegex = try? NSRegularExpression(pattern: "\\(.*?>", options: .dotMatchesLineSeparators)
     
     private func textCheckingResultsOfNamedCaptureGroups() -> [String:GroupNamesSearchResult] {
         var groupnames = [String:GroupNamesSearchResult]()
         
-        guard let greg = try? NSRegularExpression(pattern: "^\\(\\?<([\\w\\a_-]*)>$", options: NSRegularExpression.Options.dotMatchesLineSeparators) else {
+        guard let greg = NSRegularExpression.gregRegex else {
             // This never happens but the alternative is to make this method throwing
             return groupnames
         }
-        guard let reg = try? NSRegularExpression(pattern: "\\(.*?>", options: NSRegularExpression.Options.dotMatchesLineSeparators) else {
+        guard let reg = NSRegularExpression.regRegex else {
             // This never happens but the alternative is to make this method throwing
             return groupnames
         }

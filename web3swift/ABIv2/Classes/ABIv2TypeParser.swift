@@ -52,9 +52,11 @@ public struct ABIv2TypeParser {
         guard let t = type, tail == nil else {throw ParsingError.elementTypeInvalid}
         return t
     }
-    
+
+    private static let typeEatingRegex = try? NSRegularExpression(pattern: ABIv2.TypeParsingExpressions.typeEatingRegex, options: .dotMatchesLineSeparators)
+
     public static func recursiveParseType(_ string: String) -> (type: ABIv2.Element.ParameterType?, tail: String?) {
-        let matcher = try! NSRegularExpression(pattern: ABIv2.TypeParsingExpressions.typeEatingRegex, options: NSRegularExpression.Options.dotMatchesLineSeparators)
+        guard let matcher = ABIv2TypeParser.typeEatingRegex else { return (nil, nil) }
         let match = matcher.matches(in: string, options: NSRegularExpression.MatchingOptions.anchored, range: string.fullNSRange)
         guard match.count == 1 else {
             return (nil, nil)
@@ -85,9 +87,10 @@ public struct ABIv2TypeParser {
         }
         return recursiveParseArray(baseType: type!, string: tail)
     }
-    
+    private static let arrayEatingRegex = try? NSRegularExpression(pattern: ABIv2.TypeParsingExpressions.arrayEatingRegex, options: .dotMatchesLineSeparators)
     public static func recursiveParseArray(baseType: ABIv2.Element.ParameterType, string: String) -> (type: ABIv2.Element.ParameterType?, tail: String?) {
-        let matcher = try! NSRegularExpression(pattern: ABIv2.TypeParsingExpressions.arrayEatingRegex, options: NSRegularExpression.Options.dotMatchesLineSeparators)
+        guard let matcher = ABIv2TypeParser.arrayEatingRegex else { return (nil, nil) }
+
         let match = matcher.matches(in: string, options: NSRegularExpression.MatchingOptions.anchored, range: string.fullNSRange)
         guard match.count == 1 else {return (nil, nil)}
         var tail: String = ""
