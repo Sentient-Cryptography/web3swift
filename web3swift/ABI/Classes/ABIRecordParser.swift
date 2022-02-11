@@ -235,9 +235,9 @@ fileprivate func exactMatchType(from string: String, length:UInt64? = nil, stati
 //    }
 //    return type
 //}
-
+fileprivate let typeRegex = try? NSRegularExpression(pattern: TypeMatchingExpressions.typeRegex, options: .dotMatchesLineSeparators)
 fileprivate func typeMatch(from string: String) throws -> ABIElement.ParameterType? {
-    let matcher = try NSRegularExpression(pattern: TypeMatchingExpressions.typeRegex, options: NSRegularExpression.Options.dotMatchesLineSeparators)
+    guard let matcher = typeRegex else { return nil }
     let match = matcher.matches(in: string, options: NSRegularExpression.MatchingOptions.anchored, range: string.fullNSRange)
     guard match.count == 1 else {return nil}
     guard match[0].numberOfRanges == 3 else {return nil}
@@ -280,9 +280,9 @@ fileprivate func typeMatch(from string: String) throws -> ABIElement.ParameterTy
 //        }
 //        return type
 //    }
-
-    fileprivate func arrayMatch(from string: String) throws -> ABIElement.ParameterType?{
-        let matcher = try NSRegularExpression(pattern: TypeMatchingExpressions.arrayRegex, options: NSRegularExpression.Options.dotMatchesLineSeparators)
+let arrayRegex = try? NSRegularExpression(pattern: TypeMatchingExpressions.arrayRegex, options: .dotMatchesLineSeparators)
+    fileprivate func arrayMatch(from string: String) throws -> ABIElement.ParameterType? {
+        guard let matcher = arrayRegex else { return nil }
         let match = matcher.matches(in: string, options: NSRegularExpression.MatchingOptions.anchored, range: string.fullNSRange)
         guard match.count == 1 else {return nil}
         guard match[0].numberOfRanges >= 4 else {return nil}

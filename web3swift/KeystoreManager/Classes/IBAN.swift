@@ -100,10 +100,9 @@ public struct IBAN {
         }
         return m
     }
-    
+    private static let matcher = try? NSRegularExpression(pattern: "^XE[0-9]{2}(ETH[0-9A-Z]{13}|[0-9A-Z]{30,31})$", options: .dotMatchesLineSeparators)
     public static func isValidIBANaddress(_ iban: String, noValidityCheck: Bool = false) -> Bool {
-        let regex = "^XE[0-9]{2}(ETH[0-9A-Z]{13}|[0-9A-Z]{30,31})$"
-        let matcher = try! NSRegularExpression(pattern: regex, options: NSRegularExpression.Options.dotMatchesLineSeparators)
+        guard let matcher = IBAN.matcher else { return false }
         let match = matcher.matches(in: iban, options: NSRegularExpression.MatchingOptions.anchored, range: iban.fullNSRange)
         guard match.count == 1 else {
             return false
