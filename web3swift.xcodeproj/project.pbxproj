@@ -207,6 +207,8 @@
 		81FB2207207BCFF9007F9A83 /* bankex-foundation-logo-coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 81FB2206207BCFF9007F9A83 /* bankex-foundation-logo-coin.png */; };
 		81FB2208207BCFF9007F9A83 /* bankex-foundation-logo-coin.png in Resources */ = {isa = PBXBuildFile; fileRef = 81FB2206207BCFF9007F9A83 /* bankex-foundation-logo-coin.png */; };
 		B350A445E5DB35C60E59AD70 /* libPods-web3swift-macOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57F8C9C48884592DCF561393 /* libPods-web3swift-macOS.a */; };
+		C840E57127FADA610045B616 /* CcipRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = C840E57027FADA610045B616 /* CcipRead.swift */; };
+		C840E57227FADA610045B616 /* CcipRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = C840E57027FADA610045B616 /* CcipRead.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -358,6 +360,7 @@
 		A9ADDE40292A17C21B8D5516 /* Pods-web3swift-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-web3swift-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-web3swift-iOS/Pods-web3swift-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		B48CA58D134401D3C4E8CCC5 /* Pods_Web3Swift_osx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Web3Swift_osx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5AFAFC5440E52BE57C7BA13 /* Pods_web3swiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_web3swiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C840E57027FADA610045B616 /* CcipRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CcipRead.swift; sourceTree = "<group>"; };
 		CA3F7E825AEBF3455D00150A /* Pods-web3swift-macOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-web3swift-macOS_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-web3swift-macOS_Tests/Pods-web3swift-macOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		CDCB852B5E2E84636B80BB99 /* Pods-web3swift-iOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-web3swift-iOS_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-web3swift-iOS_Tests/Pods-web3swift-iOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		FB43EC035C593F9E5A3644B6 /* Pods-web3swift-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-web3swift-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-web3swift-macOS/Pods-web3swift-macOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -523,6 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				81FB21F8207BA78B007F9A83 /* EIP67Code.swift */,
+				C840E57027FADA610045B616 /* CcipRead.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1045,6 +1049,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C840E57127FADA610045B616 /* CcipRead.swift in Sources */,
 				81C146F71FF274B200AA943E /* Web3+Structures.swift in Sources */,
 				8104E2281FE82BDC00F952CB /* Web3+Utils.swift in Sources */,
 				818ABD5D1FE95FC9002657BB /* Web3+Contract.swift in Sources */,
@@ -1236,6 +1241,7 @@
 				81FB21F5207814F7007F9A83 /* Web3+EventOperations.swift in Sources */,
 				8103BBCD2077B84400499769 /* PlainKeystore.swift in Sources */,
 				4194813D203630530065A83B /* RIPEMD160+StackOveflow.swift in Sources */,
+				C840E57227FADA610045B616 /* CcipRead.swift in Sources */,
 				4194813E203630530065A83B /* Data+Extension.swift in Sources */,
 				81A1822F20D67BC30016741F /* Promise+Web3+Eth+GetTransactionReceipt.swift in Sources */,
 				81A1824620D7B91B0016741F /* Promise+Web3+Intermediate+Send.swift in Sources */,
