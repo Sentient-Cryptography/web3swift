@@ -18,14 +18,17 @@ extension web3.Eth {
                 throw Web3Error.processingError("Transaction is invalid")
             }
             let rp = web3.dispatch(request)
-            return rp.map(on: queue ) { response in
+            return rp.then(on: queue ) { response -> Promise<Data> in
                 guard let value: Data = response.getValue() else {
                     if response.error != nil {
+                        if let ccipRead = CcipRead(web3: self.web3, options: self.options, onBlock: onBlock, fromDataString: response.error?.data) {
+                            return ccipRead.process()
+                        }
                         throw Web3Error.nodeError(response.error!.message)
                     }
                     throw Web3Error.nodeError("Invalid value from Ethereum node")
                 }
-                return value
+                return Promise.value(value)
             }
         } catch {
             let returnPromise = Promise<Data>.pending()

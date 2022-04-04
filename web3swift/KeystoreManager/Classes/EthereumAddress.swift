@@ -99,8 +99,11 @@ public struct EthereumAddress: Equatable {
                     self.type = .normal
                     return
                 }
+            } else {
+                self._address = data.toHexString().addHexPrefix()
+                self.type = .normal
+                return
             }
-            return nil
         case .contractDeployment:
             self._address = "0x"
             self.type = .contractDeployment

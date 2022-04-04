@@ -103,6 +103,7 @@ public struct JSONRPCresponse: Decodable{
     public struct ErrorMessage: Decodable {
         public var code: Int
         public var message: String
+        public var data: String?
     }
     
     internal var decodableTypes: [Decodable.Type] = [[EventLog].self,
