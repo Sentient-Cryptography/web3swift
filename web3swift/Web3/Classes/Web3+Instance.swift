@@ -26,7 +26,7 @@ public class web3: Web3OptionsInheritable {
         return self.provider.send(request: request)
     }
     public func dispatch(_ request: JSONRPCrequest) -> Promise<JSONRPCresponse> {
-        return self.requestDispatcher.addToQueue(request: request)
+        return requestDispatcher.addToQueue(request: request)
     }
 
     public init(provider prov: Web3Provider, queue: OperationQueue? = nil, dispatcher: OperationDispatcher? = nil, requestDispatcher: JSONRPCrequestDispatcher? = nil) {
