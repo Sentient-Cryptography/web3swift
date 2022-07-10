@@ -20,6 +20,7 @@ public enum Web3Error: Error {
     case processingError(String)
     case keystoreError(AbstractKeystoreError)
     case generalError(Error)
+    case rateLimited
     case unknownError
 }
 

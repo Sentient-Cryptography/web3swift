@@ -30,6 +30,10 @@ extension Web3HttpProvider {
 //                let debugString = String(data: requestData, encoding: .utf8)
 //                print(debugString)
                 task = session.dataTask(with: urlRequest){ (data, response, error) in
+                    if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode == 429 {
+                        rp.resolver.reject(Web3Error.rateLimited)
+                        return
+                    }
                     guard error == nil else {
                         rp.resolver.reject(error!)
                         return
